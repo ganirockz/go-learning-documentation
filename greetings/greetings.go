@@ -3,6 +3,8 @@ package greetings
 import (
 	"errors"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 // Hello returns a greeting for the named person
@@ -16,7 +18,22 @@ func Hello(name string) (string, error) {
 	// message = fmt.Sprintf("Hi, %v. Welcome!", name)
 
 	// In Go, the := operator is a shortcut for declaring and initializing a variable in one line
-	message := fmt.Sprintf("Hi, %v. Welcome!", name)
+	message := fmt.Sprintf(randomFormat(), name)
 
 	return message, nil
+}
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+func randomFormat() string {
+
+	formats := []string{
+		"Hi, %v. Welcome!",
+		"Greetings to see you, %v!",
+		"Hail, %v! well met!",
+	}
+
+	return formats[rand.Intn(len(formats))]
 }
